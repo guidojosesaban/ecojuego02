@@ -1,0 +1,190 @@
+/* GENERAL STYLE aplica para todo elemento */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  text-decoration: none;
+  z-index: 0;
+}
+
+.gradiantTxt {
+  background: #f869d5;
+  background: linear-gradient(to top right, #f869d5 10%, #635cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Estilo  Header + Nav */
+.mainHeader {
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #02391e;
+  padding: 0rem 2rem;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  z-index: 3;
+}
+
+.logo {
+  height: 5rem;
+  padding-left: 1rem;
+}
+
+#menuBtn {
+  display: none;
+}
+
+.mainMenu {
+  display: flex;
+  flex-flow: row nowrap;
+  list-style: none;
+}
+
+.mainMenu li {
+  margin: 0rem 1rem;
+}
+
+.mainMenu li:hover {
+  transform: scale(1.1);
+  transition: 250ms;
+}
+
+.mainMenu li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.4rem;
+}
+
+#selected {
+  background: #f869d5;
+  background: linear-gradient(to top right, #f869d5 10%, #635cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+}
+/* Final Estilo  Header + Nav */
+
+/* global footer style */
+
+.mainFooter {
+  min-height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #2323233b;
+}
+
+.footerTxt {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  color: #02391e;
+}
+
+.footerTxt p {
+  font-size: 1.4rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  text-align: center;
+}
+
+/* MOBILE CSS STYLE */
+@media screen and (max-width: 1000px) {
+  #menuBtn {
+    display: block;
+    height: 3rem;
+  }
+
+  .mainHeader {
+    z-index: 3;
+  }
+
+  .mainMenu {
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 5rem;
+    left: 0%;
+    width: 100vw;
+    background: #ffffff;
+    z-index: 3;
+    display: none;
+    padding: 1rem 0rem;
+  }
+
+  .mainMenu li {
+    margin: 1.5rem 0rem;
+  }
+
+  .mainMenu li a {
+    padding: 1rem;
+    color: #02391e;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .displayYes {
+    display: flex;
+  }
+
+  .mainFooter {
+    margin-top: 0rem;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .mainHeader,
+  .homeMainSection,
+  .homeMainContent,
+  .mainFooter {
+    padding: 0 calc(100vw - 2000px);
+  }
+}
+
+.mainContent{
+    min-height: calc(100vh - 6rem - 5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6rem;
+    flex-direction: column;
+}
+
+#gameCanvas {
+  border: 1px solid #000000;
+  width: 40vw;
+  height: 60vh;
+  background: url("./src/img/background.jpg");
+  background-size: cover;
+  background-position: bottom;
+}
+
+#game-over {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #00ffd9ad;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#points-counter{
+    font-size: 1.6rem;
+}

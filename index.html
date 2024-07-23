@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <header class="mainHeader">
+        <img src="./src/img/logo.png" alt="logo" class="logo">
+        <img
+          id="menuBtn"
+          src="./src/icons/menuIcon.svg"
+          alt="menuBtn"
+        />
+        <ul class="mainMenu">
+          <li><a href="https://guidojosesaban.github.io/DYDYWTPOG11/index.html">Inicio</a></li>
+          <li><a href="https://guidojosesaban.github.io/DYDYWTPOG11/integrantes.html">Integrantes</a></li>
+          <li><a href="https://guidojosesaban.github.io/DYDYWTPOG11/avances.html" >Avances</a></li>
+          <li><a href="https://guidojosesaban.github.io/DYDYWTPOG11/juegos.html"id="selected">Juegos</a></li>
+        </ul>
+      </header>
+      <div class="mainContent">
+        <p id="points-counter">Puntos: <span id="points-span">0</span></p>
+        <canvas id="gameCanvas">
+          Your browser does not support the HTML5 canvas tag.
+        </canvas>
+        <div id="game-over">
+          <h1 id="game-over-text">Juego finalizado</h1>
+          <p id="points-text">Puntos: <span id="game-over-points">0</span></p>
+          <button id="restart-button">Reiniciar</button>
+        </div>
+      
+
+      </div>
+
+  <footer class="mainFooter">
+    <div class="footerTxt">
+      <p>Sitio desarrollado para uso educativo</p>
+      <p>Diseño y Desarrollo Web</p>
+      <p>UADE</p>
+      <p>2024</p>
+    </div>
+  </footer>
+  
+    <script src="./src/js/index.js"></script> 
+
+  <script>
+    var canvas = document.getElementById("gameCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // Ajustar el tamaño del canvas
+    canvas.width = window.innerWidth * 0.4;
+    canvas.height = window.innerHeight * 0.6;
+
+    // Imágenes de los objetos
+    var recyclableImages = ['./src/img/rec/1455739769_Kitchen_Bold_Line_Color_Mix-02_icon-icons.com_53397.svg', './src/img/rec/Bottle_of_Water_icon-icons.com_68778.svg', './src/img/rec/carton_box_21838.png', './src/img/rec/news-newspaper-media-paper-press-article_108607.svg'];
+    var nonRecyclableImages = ['./src/img/norec/-coffee-container_89755.svg', './src/img/norec/apple_fruit_food_icon_218349.svg', './src/img/norec/French_Fries_icon-icons.com_68745.svg'];
+
+    // Cubo
+    var cube = {
+      x: canvas.width / 2,
+      y: canvas.height - 50,
+      width: 50,
+      height: 50,
+      speed: 20,
+      image: new Image()
+    };
+    cube.image.src = './src/img/trashcan-full-icon_34338.png'; // Ruta de la imagen del cubo
+
+    // Objetos
+    var objects = [];
+    var spawnRate = 0.01; // Tasa inicial de spawn
+    var points = 0;
+    var gameOver = false;
+
+    // Crear objeto
+    function createObject() {
+      var objectId = Math.random() > 0.5 ? 1 : 2;
+      var objectImage = new Image();
+      objectImage.src = objectId == 1 ? recyclableImages[Math.floor(Math.random() * recyclableImages.length)] : nonRecyclableImages[Math.floor(Math.random() * nonRecyclableImages.length)];
+      objects.push({
+        x: Math.random() * (canvas.width - 30),
+        y: -30,
+        width: 30,
+        height: 30,
+        id: objectId,
+        image: objectImage
+      });
+    }
+
+    // Movimiento del cubo
+    window.onkeydown = function(e) {
+      if (e.key == 'ArrowLeft' && cube.x - cube.speed > 0) {
+        cube.x -= cube.speed;
+      } else if (e.key == 'ArrowRight' && cube.x + cube.width + cube.speed < canvas.width) {
+        cube.x += cube.speed;
+      }
+    };
+
+    // Función principal del juego
+    function gameLoop() {
+      if (!gameOver) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Dibujar cubo
+        ctx.drawImage(cube.image, cube.x, cube.y, cube.width, cube.height);
+
+        // Crear objetos
+        if (Math.random() < spawnRate) {
+          createObject();
+        }
+
+        // Dibujar y mover objetos
+        for (var i = 0; i < objects.length; i++) {
+          var object = objects[i];
+          ctx.drawImage(object.image, object.x, object.y, object.width, object.height);
+          object.y += 2;
+
+          // Comprobar colisiones
+          if (object.y + object.height > cube.y && object.y < cube.y + cube.height && object.x + object.width > cube.x && object.x < cube.x + cube.width) {
+            if (object.id == 1) {
+              points++;
+              document.getElementById("points-span").innerHTML = points;
+            } else {
+              gameOver = true;
+            }
+            objects.splice(i, 1);
+            i--;
+          }
+        }
+
+        // Mostrar pantalla de fin de juego si es necesario
+        if (gameOver) {
+          document.getElementById("game-over").style.display = "block";
+          document.getElementById("game-over-points").innerHTML = points;
+        }
+      }
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Reiniciar juego
+    document.getElementById("restart-button").addEventListener("click", function() {
+      gameOver = false;
+      points = 0;
+      document.getElementById("game-over").style.display = "none";
+      document.getElementById("points-span").innerHTML = points;
+      objects = [];
+      spawnRate = 0.01; // Restaurar tasa de spawn inicial
+      gameLoop();
+    });
+
+    // Iniciar juego
+    gameLoop();
+  </script>
+
+</body>
+</html>
