@@ -100,6 +100,58 @@
   text-align: center;
 }
 
+
+.mainContent{
+  min-height: calc(100vh - 6rem - 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6rem;
+  flex-direction: column;
+}
+
+#gameCanvas {
+border: 1px solid #000000;
+width: 40vw;
+height: 60vh;
+background: url("./src/img/background.jpg");
+background-size: cover;
+background-position: bottom;
+}
+
+#game-over {
+display: none;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: #00ffd9ad;
+padding: 20px;
+border: 1px solid #000;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#points-counter{
+  font-size: 1.6rem;
+}
+
+
+.ideal{
+width: 80vw;
+padding: 2rem 0rem;
+text-align: center;
+}
+
+.instrucciones{
+padding: 2rem 0rem;
+width: 80vw;
+}
+
+.instrucciones h1{
+text-align: center;
+}
+
 /* MOBILE CSS STYLE */
 @media screen and (max-width: 1000px) {
   #menuBtn {
@@ -143,6 +195,15 @@
   .mainFooter {
     margin-top: 0rem;
   }
+
+  #gameCanvas {
+    border: 1px solid #000000;
+    width: 90vw;
+    height: 60vh;
+    background: url("./src/img/background.jpg");
+    background-size: cover;
+    background-position: bottom;
+  }
 }
 
 @media screen and (min-width: 2000px) {
@@ -152,39 +213,4 @@
   .mainFooter {
     padding: 0 calc(100vw - 2000px);
   }
-}
-
-.mainContent{
-    min-height: calc(100vh - 6rem - 5rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 6rem;
-    flex-direction: column;
-}
-
-#gameCanvas {
-  border: 1px solid #000000;
-  width: 40vw;
-  height: 60vh;
-  background: url("./src/img/background.jpg");
-  background-size: cover;
-  background-position: bottom;
-}
-
-#game-over {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #00ffd9ad;
-  padding: 20px;
-  border: 1px solid #000;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-#points-counter{
-    font-size: 1.6rem;
 }
