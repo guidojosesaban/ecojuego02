@@ -113,13 +113,26 @@
     }
 
     // Movimiento del cubo
-    window.onkeydown = function(e) {
-      if (e.key == 'ArrowLeft' && cube.x - cube.speed > 0) {
-        cube.x -= cube.speed;
-      } else if (e.key == 'ArrowRight' && cube.x + cube.width + cube.speed < canvas.width) {
-        cube.x += cube.speed;
-      }
-    };
+  // Movimiento del cubo
+  window.onkeydown = function(e) {
+    if (e.key == 'ArrowLeft' && cube.x - cube.speed > 0) {
+      cube.x -= cube.speed;
+    } else if (e.key == 'ArrowRight' && cube.x + cube.width + cube.speed < canvas.width) {
+      cube.x += cube.speed;
+    }
+  };
+
+  // Agregar control táctil
+  window.addEventListener('touchstart', function(e) {
+    var touch = e.touches[0];
+    cube.x = touch.clientX - cube.width / 2;
+  });
+
+  window.addEventListener('touchmove', function(e) {
+    var touch = e.touches[0];
+    cube.x = touch.clientX - cube.width / 2;
+    e.preventDefault();
+  }, { passive: false });
 
     // Función principal del juego
     function gameLoop() {
